@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Noel🎄</title>
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  transition: background 1.5s ease;
+}
+
+section {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+section.active {
+  opacity: 1;
+}
+
+/* ===== NOEL ===== */
+#noel {
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+/* ===== SINH NHẬT ===== */
+#birthday {
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color: white;
+}
+
+/* ===== TEXT ===== */
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* ===== CAKE ===== */
+.cake {
+  font-size: clamp(3rem, 10vw, 5rem);
+  margin: 20px 0;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  to { transform: translateY(-12px); }
+}
+
+/* ===== SNOW ===== */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+
+/* ===== CONFETTI ===== */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: confettiFall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* ===== MOBILE TỐI ƯU THÊM ===== */
+@media (max-width: 480px) {
+  section {
+    padding: 15px;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  .confetti {
+    width: 6px;
+    height: 6px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+  <!-- NOEL -->
+  <section id="noel" class="active">
+    <h1>🎄 Merry Christmas 🎄</h1>
+    <p>
+      Chúc bạn một mùa Giáng Sinh an lành,<br />
+      ấm áp và tràn đầy niềm vui ✨
+    </p>
+  </section>
+
+  <!-- SINH NHẬT -->
+  <section id="birthday">
+    <h1>🎂 Happy Birthday 🎉</h1>
+    <div class="cake">🎂</div>
+    <p>
+      Hôm nay không chỉ là Noel…<br /><br />
+      👉 MÀ CÒN LÀ SINH NHẬT CỦA BẠN 🥳<br /><br />
+      Chúc bạn tuổi mới thật nhiều niềm vui,<br />
+      luôn cười nhiều và hạnh phúc ❤️<br /><br />
+      — From: <b>Vịt Nâu 😄</b>
+    </p>
+  </section>
+
+  <!-- NHẠC -->
+  <audio id="musicNoel" autoplay loop>
+    <source src="audio/noen.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="musicBirthday" loop>
+    <source src="audio/snvv.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+const noel = document.getElementById('noel');
+const birthday = document.getElementById('birthday');
+const musicNoel = document.getElementById('musicNoel');
+const musicBirthday = document.getElementById('musicBirthday');
+
+/* ===== CLICK ẨN ĐỂ KÍCH HOẠT ÂM THANH ===== */
+document.body.addEventListener('click', () => {
+  musicNoel.volume = 0.5;
+  musicNoel.play();
+}, { once: true });
+
+/* ===== TẠO TUYẾT ===== */
+function createSnow() {
+  const snow = document.createElement('div');
+  snow.className = 'snowflake';
+  snow.innerHTML = '❄';
+  snow.style.left = Math.random() * window.innerWidth + 'px';
+  snow.style.animationDuration = 3 + Math.random() * 5 + 's';
+  snow.style.opacity = Math.random();
+  snow.style.fontSize = 10 + Math.random() * 20 + 'px';
+  document.body.appendChild(snow);
+  setTimeout(() => snow.remove(), 8000);
+}
+setInterval(createSnow, 200);
+
+/* ===== CHUYỂN SANG SINH NHẬT ===== */
+setTimeout(() => {
+  noel.classList.remove('active');
+  birthday.classList.add('active');
+
+  musicNoel.pause();
+  musicNoel.currentTime = 0;
+
+  musicBirthday.volume = 0.7;
+  musicBirthday.play();
+
+  /* PHÁO GIẤY */
+  setInterval(() => {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+    confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 6000);
+  }, 150);
+
+}, 7000);
+</script>
+
+</body>
+</html>
