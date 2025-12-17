@@ -17,6 +17,7 @@
     body {
       height: calc(var(--vh, 1vh) * 100);
       overflow: hidden;
+      background: #000;
     }
 
     /* ===== SECTION ===== */
@@ -31,7 +32,7 @@
       padding: 20px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 1.5s ease;
+      transition: opacity 1s ease;
     }
 
     section.active {
@@ -82,15 +83,34 @@
     }
 
     .tap {
-      margin-top: 15px;
+      margin-top: 25px;
       font-size: 1.2rem;
-      opacity: .8;
+      color: white;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
     }
 
     /* ===== NOEL ===== */
     #noel {
       background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
       color: white;
+    }
+
+    /* ===== COUNTDOWN ===== */
+    #countdown {
+      background: #000;
+      color: gold;
+    }
+
+    #countNumber {
+      font-size: 8rem;
+      font-weight: bold;
+      text-shadow: 0 0 20px gold;
     }
 
     /* ===== BIRTHDAY ===== */
@@ -100,98 +120,49 @@
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(2rem, 8vw, 3rem);
       margin-bottom: 15px;
     }
 
     p {
-      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      font-size: clamp(1rem, 4vw, 1.3rem);
       line-height: 1.6;
     }
 
-    /* ===== CAKE ===== */
     .cake {
-      font-size: 4rem;
+      font-size: 5rem;
+      margin: 20px 0;
       animation: bounce 1s infinite alternate;
     }
 
     @keyframes bounce {
-      to {
-        transform: translateY(-12px);
-      }
+      to { transform: translateY(-20px); }
     }
 
-    /* ===== SNOW ===== */
-    .snowflake {
+    /* ===== EFFECTS ===== */
+    .snowflake, .confetti, .firework, .float-text {
       position: fixed;
-      top: -10px;
-      color: white;
-      animation: fall linear infinite;
       pointer-events: none;
       will-change: transform;
+      z-index: 10;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-      }
-    }
+    .snowflake { top: -10px; color: white; animation: fall linear infinite; }
+    @keyframes fall { to { transform: translateY(110vh); } }
 
-    /* ===== CONFETTI ===== */
-    .confetti {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      top: -10px;
-      animation: confettiFall linear infinite;
-      pointer-events: none;
-      will-change: transform;
-    }
+    .confetti { width: 8px; height: 8px; top: -10px; animation: cFall linear infinite; }
+    @keyframes cFall { to { transform: translateY(110vh) rotate(360deg); } }
 
-    @keyframes confettiFall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-      }
-    }
+    .firework { width: 6px; height: 6px; border-radius: 50%; animation: explode 1s ease-out forwards; }
+    @keyframes explode { to { transform: scale(20); opacity: 0; } }
 
-    /* ===== FIREWORK ===== */
-    .firework {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: explode 1s ease-out forwards;
-    }
-
-    @keyframes explode {
-      to {
-        transform: scale(15);
-        opacity: 0;
-      }
-    }
-
-    /* ===== FLOAT TEXT ===== */
-    .float-text {
-      position: fixed;
-      bottom: -40px;
-      font-size: 1.5rem;
-      animation: floatUp 4s linear forwards;
-      pointer-events: none;
-    }
-
-    @keyframes floatUp {
-      to {
-        transform: translateY(-120vh);
-        opacity: 0;
-      }
-    }
+    .float-text { bottom: -50px; font-size: 1.5rem; animation: fUp 4s linear forwards; }
+    @keyframes fUp { to { transform: translateY(-120vh); opacity: 0; } }
   </style>
 </head>
 
 <body>
 
-  <!-- 🎁 GIFT -->
   <section id="gift" class="active">
     <div class="gift-box" id="giftBox">
       <div class="gift-lid"></div>
@@ -202,119 +173,122 @@
     <div class="tap">Chạm để mở quà 🎄</div>
   </section>
 
-  <!-- 🎄 NOEL -->
   <section id="noel">
     <h1>🎄 Merry Christmas 🎄</h1>
     <p>Chúc bạn một mùa Giáng Sinh an lành,<br>ấm áp và hạnh phúc ✨</p>
   </section>
 
-  <!-- 🎂 BIRTHDAY -->
+  <section id="countdown">
+    <p>Nhưng chờ đã...</p>
+    <div id="countNumber">10</div>
+    <p>Điều bất ngờ đang đến!</p>
+  </section>
+
   <section id="birthday">
     <h1>🎂 Happy Birthday 🎉</h1>
     <div class="cake">🎂</div>
     <p>
-      Hôm nay không chỉ là Noel…<br><br>
-      👉 MÀ CÒN LÀ SINH NHẬT CỦA BẠN 🥳<br><br>
+      Hôm nay không chỉ là Noel…<br>
+      👉 MÀ CÒN LÀ SINH NHẬT BẠN 🥳<br><br>
       Chúc bạn luôn vui vẻ và hạnh phúc ❤️<br><br>
       — From: <b>Vịt Nâu 😄</b>
     </p>
   </section>
 
-  <!-- 🔊 MUSIC -->
-  <audio id="musicNoel" loop playsinline webkit-playsinline preload="auto">
+  <audio id="musicNoel" loop playsinline preload="auto">
     <source src="audio/noen.mp3" type="audio/mpeg">
   </audio>
 
-  <audio id="musicBirthday" loop playsinline webkit-playsinline preload="auto">
+  <audio id="musicBirthday" loop playsinline preload="auto">
     <source src="audio/snvv.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     /* ===== FIX iOS HEIGHT ===== */
-    function fixIOSHeight() {
-      document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-    }
-    fixIOSHeight();
-    window.addEventListener('resize', fixIOSHeight);
+    const fixHeight = () => document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+    fixHeight();
+    window.addEventListener('resize', fixHeight);
 
-    /* ===== AUDIO UNLOCK iOS ===== */
-    function unlockAudio(audio) {
-      const unlock = () => {
-        audio.play().then(() => {
-          audio.pause();
-          audio.currentTime = 0;
-        }).catch(() => { });
-        document.removeEventListener('touchstart', unlock);
-        document.removeEventListener('click', unlock);
-      };
-      document.addEventListener('touchstart', unlock);
-      document.addEventListener('click', unlock);
-    }
-
-    /* ===== ELEMENT ===== */
-    const gift = document.getElementById('gift');
+    /* ===== ELEMENTS ===== */
     const giftBox = document.getElementById('giftBox');
-    const noel = document.getElementById('noel');
-    const birthday = document.getElementById('birthday');
+    const sections = ['gift', 'noel', 'countdown', 'birthday'].reduce((acc, id) => {
+      acc[id] = document.getElementById(id);
+      return acc;
+    }, {});
     const musicNoel = document.getElementById('musicNoel');
     const musicBirthday = document.getElementById('musicBirthday');
+    const countDisplay = document.getElementById('countNumber');
 
+    let isOpened = false;
 
+    /* ===== MAIN LOGIC ===== */
+    /* ===== MAIN LOGIC ===== */
+giftBox.addEventListener('click', function() {
+  if (isOpened) return;
+  isOpened = true;
 
-    let opened = false;
+  // 1. Mở nắp & Chơi nhạc Noel
+  giftBox.classList.add('open');
+  musicNoel.play().catch(() => {});
 
-    giftBox.addEventListener('pointerdown', openGift);
+  // 2. Chờ 0.8s để nắp hộp mở xong rồi mới hiện nội dung Noel
+  setTimeout(() => {
+    sections.gift.classList.remove('active');
+    sections.noel.classList.add('active');
+    startSnow();
 
-    function openGift() {
-      if (opened) return;
-      opened = true;
+    // 3. CHÍNH XÁC 6 GIÂY SAU KHI HIỆN NOEL -> BẮT ĐẦU ĐẾM NGƯỢC
+    setTimeout(() => {
+      sections.noel.classList.remove('active');
+      sections.countdown.classList.add('active');
+      runCountdown(); // Bắt đầu chạy từ 10 về 1
+    }, 2500); 
 
-      /* 🎄 PLAY NOEL NGAY KHI CLICK */
-      musicNoel.pause();
-      musicNoel.currentTime = 0;
-      musicNoel.volume = 1;
-      musicNoel.play().catch(err => console.log(err));
+  }, 800);
+});
 
-      giftBox.classList.add('open');
-
-      // HIỆN NOEL
-      setTimeout(() => {
-        gift.classList.remove('active');
-        noel.classList.add('active');
-        startSnow();
-
-        // CHUYỂN SANG SINH NHẬT
-        setTimeout(() => {
-          noel.classList.remove('active');
-          birthday.classList.add('active');
-
-          /* 🎂 ĐỔI NHẠC */
-          musicNoel.pause();
-          musicBirthday.pause();
-          musicBirthday.currentTime = 0;
-          musicBirthday.volume = 1;
-          musicBirthday.play().catch(err => console.log(err));
-
-          startConfetti();
-          startFirework();
-          startFloatingText();
-
-        }, 6000);
-      }, 800);
+function runCountdown() {
+  let count = 10;
+  countDisplay.textContent = count; // Hiển thị số 10 ngay lập tức khi chuyển cảnh
+  
+  const timer = setInterval(() => {
+    count--;
+    if (count >= 1) {
+      countDisplay.textContent = count;
+    } else {
+      clearInterval(timer);
+      showBirthday(); // Hết 10s chuyển sang sinh nhật
     }
+  }, 1000);
+}
 
+function showBirthday() {
+  sections.countdown.classList.remove('active');
+  sections.birthday.classList.add('active');
+
+  // Đổi nhạc
+  musicNoel.pause();
+  musicBirthday.currentTime = 0;
+  musicBirthday.play().catch(err => console.log("Lỗi nhạc SN:", err));
+
+  // Hiệu ứng
+  startConfetti();
+  startFirework();
+  startFloatingText();
+}
 
     /* ===== EFFECTS ===== */
     function startSnow() {
       setInterval(() => {
+        if (sections.birthday.classList.contains('active')) return; // Dừng tuyết khi qua sn
         const s = document.createElement('div');
         s.className = 'snowflake';
-        s.textContent = '❄';
-        s.style.left = Math.random() * innerWidth + 'px';
-        s.style.fontSize = 10 + Math.random() * 20 + 'px';
-        s.style.animationDuration = 3 + Math.random() * 5 + 's';
+        s.innerHTML = '❄';
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        s.style.animationDuration = (Math.random() * 3 + 4) + 's';
         document.body.appendChild(s);
-        setTimeout(() => s.remove(), 8000);
+        setTimeout(() => s.remove(), 7000);
       }, 300);
     }
 
@@ -322,62 +296,38 @@
       setInterval(() => {
         const c = document.createElement('div');
         c.className = 'confetti';
-        c.style.left = Math.random() * innerWidth + 'px';
-        c.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-        c.style.animationDuration = 3 + Math.random() * 3 + 's';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        c.style.animationDuration = (Math.random() * 2 + 3) + 's';
         document.body.appendChild(c);
-        setTimeout(() => c.remove(), 6000);
-      }, 250);
+        setTimeout(() => c.remove(), 5000);
+      }, 200);
     }
 
     function startFirework() {
       setInterval(() => {
         const f = document.createElement('div');
         f.className = 'firework';
-        f.style.left = Math.random() * innerWidth + 'px';
-        f.style.top = Math.random() * innerHeight * 0.5 + 'px';
-        f.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+        f.style.left = Math.random() * 100 + 'vw';
+        f.style.top = Math.random() * 50 + 'vh';
+        f.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
         document.body.appendChild(f);
         setTimeout(() => f.remove(), 1000);
       }, 800);
     }
 
-    const messages = ["🎄 Merry Christmas", "🎂 Happy Birthday", "🎁 Học Giỏi", "💖 Xinh Đẹp"];
     function startFloatingText() {
+      const msgs = ["🎂 HAPPY BIRTHDAY", "✨ TUỔI MỚI RỰC RỠ", "💖 LUÔN HẠNH PHÚC", "🎁 QUÀ ĐÂY NÈ"];
       setInterval(() => {
         const t = document.createElement('div');
         t.className = 'float-text';
-        t.textContent = messages[Math.floor(Math.random() * messages.length)];
-        t.style.left = Math.random() * 80 + 'vw';
+        t.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+        t.style.left = Math.random() * 60 + 10 + 'vw';
+        t.style.color = `hsl(${Math.random() * 360}, 100%, 80%)`;
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 4000);
-      }, 1200);
-    }
-
-    /* ===== AUDIO FADE ===== */
-    function fadeIn(audio, duration = 1500) {
-      let step = 0.05;
-      let interval = duration / (1 / step);
-      const fade = setInterval(() => {
-        if (audio.volume < 1) audio.volume = Math.min(audio.volume + step, 1);
-        else clearInterval(fade);
-      }, interval);
-    }
-
-    function fadeOut(audio, duration = 1500) {
-      let step = 0.05;
-      let interval = duration / (1 / step);
-      const fade = setInterval(() => {
-        if (audio.volume > 0) audio.volume = Math.max(audio.volume - step, 0);
-        else {
-          audio.pause();
-          audio.currentTime = 0;
-          clearInterval(fade);
-        }
-      }, interval);
+      }, 1500);
     }
   </script>
-
 </body>
-
 </html>
