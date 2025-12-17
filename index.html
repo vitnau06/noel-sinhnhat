@@ -1,206 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giáng sinh an lành</title>
 
-  <title>Noel🎄</title>
   <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-body {
-  height: 100vh;
-  overflow: hidden;
-  transition: background 1.5s ease;
-}
+    body {
+      height: calc(var(--vh, 1vh) * 100);
+      overflow: hidden;
+    }
 
-section {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
+    /* ===== SECTION ===== */
+    section {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
 
-section.active {
-  opacity: 1;
-}
+    section.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-/* ===== NOEL ===== */
-#noel {
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  color: white;
-}
+    /* ===== GIFT ===== */
+    .gift-box {
+      position: relative;
+      width: 140px;
+      height: 120px;
+      cursor: pointer;
+    }
 
-/* ===== SINH NHẬT ===== */
-#birthday {
-  background: linear-gradient(to right, #ff758c, #ff7eb3);
-  color: white;
-}
+    .gift-body {
+      width: 100%;
+      height: 100%;
+      background: #c1121f;
+      border-radius: 12px;
+      position: absolute;
+      bottom: 0;
+    }
 
-/* ===== TEXT ===== */
-h1 {
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  margin-bottom: 15px;
-}
+    .gift-lid {
+      width: 150px;
+      height: 40px;
+      background: #e63946;
+      position: absolute;
+      top: -30px;
+      left: -5px;
+      border-radius: 12px;
+      transform-origin: left center;
+      transition: transform 1s ease;
+    }
 
-p {
-  font-size: clamp(1rem, 3.5vw, 1.3rem);
-  max-width: 600px;
-  line-height: 1.6;
-}
+    .ribbon {
+      position: absolute;
+      width: 16px;
+      height: 100%;
+      background: gold;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-/* ===== CAKE ===== */
-.cake {
-  font-size: clamp(3rem, 10vw, 5rem);
-  margin: 20px 0;
-  animation: bounce 1s infinite alternate;
-}
+    .gift-box.open .gift-lid {
+      transform: rotate(-40deg) translate(-20px, -20px);
+    }
 
-@keyframes bounce {
-  to { transform: translateY(-12px); }
-}
+    .tap {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      opacity: .8;
+    }
 
-/* ===== SNOW ===== */
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  animation: fall linear infinite;
-  pointer-events: none;
-}
+    /* ===== NOEL ===== */
+    #noel {
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
 
-@keyframes fall {
-  to { transform: translateY(110vh); }
-}
+    /* ===== BIRTHDAY ===== */
+    #birthday {
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      color: white;
+    }
 
-/* ===== CONFETTI ===== */
-.confetti {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  top: -10px;
-  animation: confettiFall linear infinite;
-  pointer-events: none;
-}
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 15px;
+    }
 
-@keyframes confettiFall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-  }
-}
+    p {
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      line-height: 1.6;
+    }
 
-/* ===== MOBILE TỐI ƯU THÊM ===== */
-@media (max-width: 480px) {
-  section {
-    padding: 15px;
-  }
+    /* ===== CAKE ===== */
+    .cake {
+      font-size: 4rem;
+      animation: bounce 1s infinite alternate;
+    }
 
-  p {
-    line-height: 1.5;
-  }
+    @keyframes bounce {
+      to {
+        transform: translateY(-12px);
+      }
+    }
 
-  .confetti {
-    width: 6px;
-    height: 6px;
-  }
-}
-</style>
+    /* ===== SNOW ===== */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      animation: fall linear infinite;
+      pointer-events: none;
+      will-change: transform;
+    }
 
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    /* ===== CONFETTI ===== */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      top: -10px;
+      animation: confettiFall linear infinite;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    /* ===== FIREWORK ===== */
+    .firework {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: explode 1s ease-out forwards;
+    }
+
+    @keyframes explode {
+      to {
+        transform: scale(15);
+        opacity: 0;
+      }
+    }
+
+    /* ===== FLOAT TEXT ===== */
+    .float-text {
+      position: fixed;
+      bottom: -40px;
+      font-size: 1.5rem;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- NOEL -->
-  <section id="noel" class="active">
-    <h1>🎄 Merry Christmas 🎄</h1>
-    <p>
-      Chúc bạn một mùa Giáng Sinh an lành,<br />
-      ấm áp và tràn đầy niềm vui ✨
-    </p>
+  <!-- 🎁 GIFT -->
+  <section id="gift" class="active">
+    <div class="gift-box" id="giftBox">
+      <div class="gift-lid"></div>
+      <div class="gift-body">
+        <div class="ribbon"></div>
+      </div>
+    </div>
+    <div class="tap">Chạm để mở quà 🎄</div>
   </section>
 
-  <!-- SINH NHẬT -->
+  <!-- 🎄 NOEL -->
+  <section id="noel">
+    <h1>🎄 Merry Christmas 🎄</h1>
+    <p>Chúc bạn một mùa Giáng Sinh an lành,<br>ấm áp và hạnh phúc ✨</p>
+  </section>
+
+  <!-- 🎂 BIRTHDAY -->
   <section id="birthday">
     <h1>🎂 Happy Birthday 🎉</h1>
     <div class="cake">🎂</div>
     <p>
-      Hôm nay không chỉ là Noel…<br /><br />
-      👉 MÀ CÒN LÀ SINH NHẬT CỦA BẠN 🥳<br /><br />
-      Chúc bạn tuổi mới thật nhiều niềm vui,<br />
-      luôn cười nhiều và hạnh phúc ❤️<br /><br />
+      Hôm nay không chỉ là Noel…<br><br>
+      👉 MÀ CÒN LÀ SINH NHẬT CỦA BẠN 🥳<br><br>
+      Chúc bạn luôn vui vẻ và hạnh phúc ❤️<br><br>
       — From: <b>Vịt Nâu 😄</b>
     </p>
   </section>
 
-  <!-- NHẠC -->
-  <audio id="musicNoel" autoplay loop>
+  <!-- 🔊 MUSIC -->
+  <audio id="musicNoel" loop playsinline webkit-playsinline preload="auto">
     <source src="audio/noen.mp3" type="audio/mpeg">
   </audio>
 
-  <audio id="musicBirthday" loop>
+  <audio id="musicBirthday" loop playsinline webkit-playsinline preload="auto">
     <source src="audio/snvv.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-const noel = document.getElementById('noel');
-const birthday = document.getElementById('birthday');
-const musicNoel = document.getElementById('musicNoel');
-const musicBirthday = document.getElementById('musicBirthday');
+    /* ===== FIX iOS HEIGHT ===== */
+    function fixIOSHeight() {
+      document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+    }
+    fixIOSHeight();
+    window.addEventListener('resize', fixIOSHeight);
 
-/* ===== CLICK ẨN ĐỂ KÍCH HOẠT ÂM THANH ===== */
-document.body.addEventListener('click', () => {
-  musicNoel.volume = 0.5;
-  musicNoel.play();
-}, { once: true });
+    /* ===== AUDIO UNLOCK iOS ===== */
+    function unlockAudio(audio) {
+      const unlock = () => {
+        audio.play().then(() => {
+          audio.pause();
+          audio.currentTime = 0;
+        }).catch(() => { });
+        document.removeEventListener('touchstart', unlock);
+        document.removeEventListener('click', unlock);
+      };
+      document.addEventListener('touchstart', unlock);
+      document.addEventListener('click', unlock);
+    }
 
-/* ===== TẠO TUYẾT ===== */
-function createSnow() {
-  const snow = document.createElement('div');
-  snow.className = 'snowflake';
-  snow.innerHTML = '❄';
-  snow.style.left = Math.random() * window.innerWidth + 'px';
-  snow.style.animationDuration = 3 + Math.random() * 5 + 's';
-  snow.style.opacity = Math.random();
-  snow.style.fontSize = 10 + Math.random() * 20 + 'px';
-  document.body.appendChild(snow);
-  setTimeout(() => snow.remove(), 8000);
-}
-setInterval(createSnow, 200);
+    /* ===== ELEMENT ===== */
+    const gift = document.getElementById('gift');
+    const giftBox = document.getElementById('giftBox');
+    const noel = document.getElementById('noel');
+    const birthday = document.getElementById('birthday');
+    const musicNoel = document.getElementById('musicNoel');
+    const musicBirthday = document.getElementById('musicBirthday');
 
-/* ===== CHUYỂN SANG SINH NHẬT ===== */
-setTimeout(() => {
-  noel.classList.remove('active');
-  birthday.classList.add('active');
 
-  musicNoel.pause();
-  musicNoel.currentTime = 0;
 
-  musicBirthday.volume = 0.7;
-  musicBirthday.play();
+    let opened = false;
 
-  /* PHÁO GIẤY */
-  setInterval(() => {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-    confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 6000);
-  }, 150);
+    giftBox.addEventListener('pointerdown', openGift);
 
-}, 7000);
-</script>
+    function openGift() {
+      if (opened) return;
+      opened = true;
+
+      /* 🎄 PLAY NOEL NGAY KHI CLICK */
+      musicNoel.pause();
+      musicNoel.currentTime = 0;
+      musicNoel.volume = 1;
+      musicNoel.play().catch(err => console.log(err));
+
+      giftBox.classList.add('open');
+
+      // HIỆN NOEL
+      setTimeout(() => {
+        gift.classList.remove('active');
+        noel.classList.add('active');
+        startSnow();
+
+        // CHUYỂN SANG SINH NHẬT
+        setTimeout(() => {
+          noel.classList.remove('active');
+          birthday.classList.add('active');
+
+          /* 🎂 ĐỔI NHẠC */
+          musicNoel.pause();
+          musicBirthday.pause();
+          musicBirthday.currentTime = 0;
+          musicBirthday.volume = 1;
+          musicBirthday.play().catch(err => console.log(err));
+
+          startConfetti();
+          startFirework();
+          startFloatingText();
+
+        }, 6000);
+      }, 800);
+    }
+
+
+    /* ===== EFFECTS ===== */
+    function startSnow() {
+      setInterval(() => {
+        const s = document.createElement('div');
+        s.className = 'snowflake';
+        s.textContent = '❄';
+        s.style.left = Math.random() * innerWidth + 'px';
+        s.style.fontSize = 10 + Math.random() * 20 + 'px';
+        s.style.animationDuration = 3 + Math.random() * 5 + 's';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 8000);
+      }, 300);
+    }
+
+    function startConfetti() {
+      setInterval(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * innerWidth + 'px';
+        c.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+        c.style.animationDuration = 3 + Math.random() * 3 + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 6000);
+      }, 250);
+    }
+
+    function startFirework() {
+      setInterval(() => {
+        const f = document.createElement('div');
+        f.className = 'firework';
+        f.style.left = Math.random() * innerWidth + 'px';
+        f.style.top = Math.random() * innerHeight * 0.5 + 'px';
+        f.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 1000);
+      }, 800);
+    }
+
+    const messages = ["🎄 Merry Christmas", "🎂 Happy Birthday", "🎁 Học Giỏi", "💖 Xinh Đẹp"];
+    function startFloatingText() {
+      setInterval(() => {
+        const t = document.createElement('div');
+        t.className = 'float-text';
+        t.textContent = messages[Math.floor(Math.random() * messages.length)];
+        t.style.left = Math.random() * 80 + 'vw';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+      }, 1200);
+    }
+
+    /* ===== AUDIO FADE ===== */
+    function fadeIn(audio, duration = 1500) {
+      let step = 0.05;
+      let interval = duration / (1 / step);
+      const fade = setInterval(() => {
+        if (audio.volume < 1) audio.volume = Math.min(audio.volume + step, 1);
+        else clearInterval(fade);
+      }, interval);
+    }
+
+    function fadeOut(audio, duration = 1500) {
+      let step = 0.05;
+      let interval = duration / (1 / step);
+      const fade = setInterval(() => {
+        if (audio.volume > 0) audio.volume = Math.max(audio.volume - step, 0);
+        else {
+          audio.pause();
+          audio.currentTime = 0;
+          clearInterval(fade);
+        }
+      }, interval);
+    }
+  </script>
 
 </body>
+
 </html>
